@@ -52,4 +52,12 @@
             </plugin>
         </plugins>
     </build>
+
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>GitHub Helpet Apache Maven Packages</name>
+            <url>https://maven.pkg.github.com/helpet-inc/backend-packages</url>
+        </repository>
+    </distributionManagement>
 </project>
