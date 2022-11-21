@@ -17,7 +17,7 @@ public class LocalizedResponseEntityExceptionHandler extends BaseResponseEntityE
         this.localizer = localizer;
     }
 
-    protected ResponseEntity<Object> buildResponseEntity(LocalizedDetailedException ex,
+    protected ResponseEntity<UnsuccessfulResponseBody> buildResponseEntity(LocalizedDetailedException ex,
                                                          HttpStatus status,
                                                          Locale locale) {
         ErrorBody errorBody = new ErrorBody(ex.getCode(),
@@ -27,31 +27,31 @@ public class LocalizedResponseEntityExceptionHandler extends BaseResponseEntityE
     }
 
     @ExceptionHandler(BadRequestLocalizedDetailedException.class)
-    protected ResponseEntity<Object> handleBadRequestLocalizedDetailedException(BadRequestLocalizedDetailedException ex,
+    protected ResponseEntity<UnsuccessfulResponseBody> handleBadRequestLocalizedDetailedException(BadRequestLocalizedDetailedException ex,
                                                                                 Locale locale) {
         return buildResponseEntity(ex, HttpStatus.BAD_REQUEST, locale);
     }
 
     @ExceptionHandler(UnauthorizedLocalizedDetailedException.class)
-    protected ResponseEntity<Object> handleUnauthorizedLocalizedDetailedException(UnauthorizedLocalizedDetailedException ex,
+    protected ResponseEntity<UnsuccessfulResponseBody> handleUnauthorizedLocalizedDetailedException(UnauthorizedLocalizedDetailedException ex,
                                                                                   Locale locale) {
         return buildResponseEntity(ex, HttpStatus.UNAUTHORIZED, locale);
     }
 
     @ExceptionHandler(ForbiddenLocalizedDetailedException.class)
-    protected ResponseEntity<Object> handleForbiddenLocalizedDetailedException(ForbiddenLocalizedDetailedException ex,
+    protected ResponseEntity<UnsuccessfulResponseBody> handleForbiddenLocalizedDetailedException(ForbiddenLocalizedDetailedException ex,
                                                                                Locale locale) {
         return buildResponseEntity(ex, HttpStatus.FORBIDDEN, locale);
     }
 
     @ExceptionHandler(NotFoundLocalizedDetailedException.class)
-    protected ResponseEntity<Object> handleNotFoundLocalizedDetailedException(NotFoundLocalizedDetailedException ex,
+    protected ResponseEntity<UnsuccessfulResponseBody> handleNotFoundLocalizedDetailedException(NotFoundLocalizedDetailedException ex,
                                                                               Locale locale) {
         return buildResponseEntity(ex, HttpStatus.NOT_FOUND, locale);
     }
 
     @ExceptionHandler(ConflictLocalizedDetailedException.class)
-    protected ResponseEntity<Object> handleConflictLocalizedDetailedException(ConflictLocalizedDetailedException ex,
+    protected ResponseEntity<UnsuccessfulResponseBody> handleConflictLocalizedDetailedException(ConflictLocalizedDetailedException ex,
                                                                               Locale locale) {
         return buildResponseEntity(ex, HttpStatus.CONFLICT, locale);
     }
