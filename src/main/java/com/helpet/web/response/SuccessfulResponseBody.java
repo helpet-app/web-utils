@@ -6,6 +6,10 @@ import lombok.Getter;
 public class SuccessfulResponseBody<T> extends ResponseBody {
     private final T data;
 
+    public SuccessfulResponseBody() {
+        this(null);
+    }
+
     public SuccessfulResponseBody(T data) {
         super(true);
         this.data = data;
