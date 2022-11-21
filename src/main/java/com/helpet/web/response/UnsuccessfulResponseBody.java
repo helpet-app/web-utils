@@ -1,4 +1,4 @@
-package com.helpet.web.util;
+package com.helpet.web.response;
 
 import lombok.Getter;
 

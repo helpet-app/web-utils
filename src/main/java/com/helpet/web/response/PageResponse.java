@@ -1,4 +1,4 @@
-package com.helpet.web.dto;
+package com.helpet.web.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

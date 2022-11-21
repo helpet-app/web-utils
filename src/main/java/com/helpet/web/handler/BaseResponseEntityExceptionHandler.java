@@ -1,5 +1,7 @@
-package com.helpet.web.util;
+package com.helpet.web.handler;
 
+import com.helpet.web.response.ErrorBody;
+import com.helpet.web.response.UnsuccessfulResponseBody;
 import org.springframework.beans.ConversionNotSupportedException;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.http.HttpHeaders;
