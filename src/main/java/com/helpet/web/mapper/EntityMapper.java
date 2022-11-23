@@ -10,16 +10,16 @@ import java.util.Collection;
  * @param <D> DTO type
  */
 public interface EntityMapper<E, D> {
-    D mapToto(E entity);
+    D mapToDto(E entity);
 
     E mapToEntity(D dto);
 
-    Collection<D> mapTotoCollection(Collection<E> entityCollection);
+    Collection<D> mapToDtoCollection(Collection<E> entityCollection);
 
     Collection<E> mapToEntityCollection(Collection<D> dtoCollection);
 
-    default PageResponse<D> mapTotoPage(Page<E> entityPage) {
-        Page<D> dtoPage = entityPage.map(this::mapToto);
+    default PageResponse<D> mapToDtoPage(Page<E> entityPage) {
+        Page<D> dtoPage = entityPage.map(this::mapToDto);
         return PageResponse.of(dtoPage);
     }
 }
