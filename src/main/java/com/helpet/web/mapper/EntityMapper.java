@@ -5,17 +5,21 @@ import org.springframework.data.domain.Page;
 
 import java.util.Collection;
 
-public interface EntityMapper<T1, T2 extends MappingDto> {
-    T2 mapToDto(T1 entity);
+/**
+ * @param <E> Entity type
+ * @param <D> DTO type
+ */
+public interface EntityMapper<E, D> {
+    D mapToto(E entity);
 
-    T1 mapToEntity(T2 dto);
+    E mapToEntity(D dto);
 
-    Collection<T2> mapToDtoCollection(Collection<T1> entityCollection);
+    Collection<D> mapTotoCollection(Collection<E> entityCollection);
 
-    Collection<T1> mapToEntityCollection(Collection<T2> dtoCollection);
+    Collection<E> mapToEntityCollection(Collection<D> dtoCollection);
 
-    default PageResponse<T2> mapToDtoPage(Page<T1> entityPage) {
-        Page<T2> dtoPage = entityPage.map(this::mapToDto);
+    default PageResponse<D> mapTotoPage(Page<E> entityPage) {
+        Page<D> dtoPage = entityPage.map(this::mapToto);
         return PageResponse.of(dtoPage);
     }
 }
