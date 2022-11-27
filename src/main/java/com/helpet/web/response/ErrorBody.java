@@ -10,5 +10,5 @@ public class ErrorBody {
 
     private final String title;
 
-    private final String message;
+    private final String reason;
 }
