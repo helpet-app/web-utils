@@ -8,7 +8,5 @@ import lombok.Getter;
 public class ErrorBody {
     private final String code;
 
-    private final String title;
-
-    private final String reason;
+    private final String message;
 }

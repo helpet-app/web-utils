@@ -18,9 +18,7 @@ public class LocalizedExceptionHandler {
     }
 
     protected ResponseEntity<UnsuccessfulResponseBody> buildResponseEntity(LocalizedException ex, HttpStatus status, Locale locale) {
-        ErrorBody errorBody = new ErrorBody(ex.getCode(),
-                                            localizer.l10n(ex.getTitleKey(), locale),
-                                            localizer.l10n(ex.getReasonKey(), locale));
+        ErrorBody errorBody = new ErrorBody(ex.getCode(), localizer.l10n(ex.getMessageKey(), locale));
         return new ResponseEntity<>(new UnsuccessfulResponseBody(errorBody), status);
     }
 
