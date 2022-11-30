@@ -1,25 +1,23 @@
 package com.helpet.web.response;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
 
-@AllArgsConstructor
-@Data
+@Getter
 public class PageResponse<T> {
-    private int totalNumberOfPages;
+    private final int totalNumberOfPages;
 
-    private long totalNumberOfElements;
+    private final long totalNumberOfElements;
 
-    private int size;
+    private final int size;
 
-    private int number;
+    private final int number;
 
-    private int numberOfElements;
+    private final int numberOfElements;
 
-    private List<T> content;
+    private final List<T> content;
 
     public PageResponse(Page<T> page) {
         this.totalNumberOfPages = page.getTotalPages();
