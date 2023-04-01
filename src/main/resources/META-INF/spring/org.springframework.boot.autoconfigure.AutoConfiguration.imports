@@ -1,2 +1,3 @@
 com.helpet.web.config.LocaleConfig
 com.helpet.web.config.OpenApiConfig
+com.helpet.web.handler.LocalizedExceptionHandler
