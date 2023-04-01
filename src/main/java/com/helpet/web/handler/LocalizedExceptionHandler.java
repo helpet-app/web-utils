@@ -4,15 +4,21 @@ import com.helpet.exception.*;
 import com.helpet.web.response.ErrorBody;
 import com.helpet.web.response.UnsuccessfulResponseBody;
 import com.helpet.web.util.Localizer;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.Locale;
 
+@RestControllerAdvice
+@AutoConfiguration
 public class LocalizedExceptionHandler {
     protected Localizer localizer;
 
+    @Autowired
     protected LocalizedExceptionHandler(Localizer localizer) {
         this.localizer = localizer;
     }
