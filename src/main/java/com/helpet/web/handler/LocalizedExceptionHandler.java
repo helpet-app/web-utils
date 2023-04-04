@@ -15,9 +15,9 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @RestControllerAdvice
 @AutoConfiguration
@@ -65,17 +65,13 @@ public class LocalizedExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     protected ResponseEntity<UnsuccessfulResponseBody> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
-        List<ErrorBody> errorBodies = new ArrayList<>();
-
-        for (FieldError error : ex.getFieldErrors()) {
-            String errorCode = extractErrorCode(error);
-            String errorMessage = error.getDefaultMessage();
-
-            errorBodies.add(ErrorBody.builder()
-                                     .code(errorCode)
-                                     .message(errorMessage)
-                                     .build());
-        }
+        Set<ErrorBody> errorBodies = ex.getFieldErrors()
+                                       .stream()
+                                       .map(error -> ErrorBody.builder()
+                                                              .code(extractErrorCode(error))
+                                                              .message(error.getDefaultMessage())
+                                                              .build())
+                                       .collect(Collectors.toSet());
 
         return new ResponseEntity<>(new UnsuccessfulResponseBody(errorBodies), HttpStatus.BAD_REQUEST);
     }
