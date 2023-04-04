@@ -4,13 +4,19 @@ import com.helpet.exception.*;
 import com.helpet.web.response.ErrorBody;
 import com.helpet.web.response.UnsuccessfulResponseBody;
 import com.helpet.web.util.Localizer;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.data.util.ParsingUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 @RestControllerAdvice
@@ -24,7 +30,11 @@ public class LocalizedExceptionHandler {
     }
 
     protected ResponseEntity<UnsuccessfulResponseBody> buildResponseEntity(LocalizedException ex, HttpStatus status, Locale locale) {
-        ErrorBody errorBody = new ErrorBody(ex.getCode(), localizer.l10n(ex.getMessageKey(), locale));
+        ErrorBody errorBody = ErrorBody.builder()
+                                       .code(ex.getCode())
+                                       .message(localizer.l10n(ex.getMessageKey(), locale))
+                                       .build();
+
         return new ResponseEntity<>(new UnsuccessfulResponseBody(errorBody), status);
     }
 
@@ -51,5 +61,30 @@ public class LocalizedExceptionHandler {
     @ExceptionHandler(ConflictLocalizedException.class)
     protected ResponseEntity<UnsuccessfulResponseBody> handleConflictLocalizedException(ConflictLocalizedException ex, Locale locale) {
         return buildResponseEntity(ex, HttpStatus.CONFLICT, locale);
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    protected ResponseEntity<UnsuccessfulResponseBody> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
+        List<ErrorBody> errorBodies = new ArrayList<>();
+
+        for (FieldError error : ex.getFieldErrors()) {
+            String errorCode = extractErrorCode(error);
+            String errorMessage = error.getDefaultMessage();
+
+            errorBodies.add(ErrorBody.builder()
+                                     .code(errorCode)
+                                     .message(errorMessage)
+                                     .build());
+        }
+
+        return new ResponseEntity<>(new UnsuccessfulResponseBody(errorBodies), HttpStatus.BAD_REQUEST);
+    }
+
+    private String extractErrorCode(FieldError error) {
+        String validationCode = error.getCode();
+        String field = StringUtils.capitalize(error.getField().replaceAll("\\W", ""));
+
+        return ParsingUtils.reconcatenateCamelCase(validationCode + "ValidationFailedFor" + field, "_")
+                           .toUpperCase();
     }
 }
