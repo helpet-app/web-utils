@@ -78,7 +78,9 @@ public class LocalizedExceptionHandler {
 
     private String extractErrorCode(FieldError error) {
         String validationCode = error.getCode();
-        String field = StringUtils.capitalize(error.getField().replaceAll("\\W", ""));
+
+        String[] fieldParts = error.getField().split("\\W+");
+        String field = StringUtils.capitalize(fieldParts[fieldParts.length - 1]);
 
         return ParsingUtils.reconcatenateCamelCase(validationCode + "ValidationFailedFor" + field, "_")
                            .toUpperCase();
