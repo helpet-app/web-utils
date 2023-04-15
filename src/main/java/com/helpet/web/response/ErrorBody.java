@@ -1,12 +1,10 @@
 package com.helpet.web.response;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
+import lombok.*;
 
+@EqualsAndHashCode
 @Builder
-@Getter
-@AllArgsConstructor
+@Data
 public class ErrorBody {
     private final String code;
 
