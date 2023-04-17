@@ -2,7 +2,6 @@ package com.helpet.web.response;
 
 import lombok.*;
 
-@EqualsAndHashCode
 @Builder
 @Data
 public class ErrorBody {
